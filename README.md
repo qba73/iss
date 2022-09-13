@@ -21,13 +21,22 @@ import github.com/qba73/iss
 Create a new client object by calling ```iss.New()```
 
 ```go
-client := iss.New()
+client, err := iss.New()
+```
+
+If you  want to use your customized ```http.Client```
+
+```go
+httpClient := http.Client{}
+iss, err := iss.New(iss.WithHTTPClient(&httpClient))
+iss.GetPosition()
+
 ```
 
 ## Retrieving ISS coordinates using client
 
 ```go
-client := iss.New()
+client, err := iss.New()
 position, err := client.GetPosition()
 fmt.Println(position)
 // Output: {10.5489 1.3942}
