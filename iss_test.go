@@ -8,77 +8,82 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/qba73/iss"
+	"github.com/shopspring/decimal"
 )
 
-func TestClient(t *testing.T) {
+func TestISSClient_ReturnsISSPositionOnInputWithCorrectData(t *testing.T) {
 	t.Parallel()
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, `{"timestamp": 1638559834, "message": "success", "iss_position": {"latitude": "29.9314", "longitude": "11.3786"}}`)
 	}))
 	defer ts.Close()
 
-	issClient := iss.New()
-	issClient.BaseURL = ts.URL
-
-	got, err := issClient.Get()
+	issClient, err := iss.New(iss.WithBaseURL(ts.URL))
+	if err != nil {
+		t.Fatal(err)
+	}
+	got, err := issClient.GetPosition()
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	want := iss.Position{
-		Lat:  29.9314,
-		Long: 11.3786,
+		Lat:  decimal.NewFromFloatWithExponent(29.9314, -4),
+		Long: decimal.NewFromFloatWithExponent(11.3786, -4),
 	}
 
 	if !cmp.Equal(got, want) {
-		t.Errorf("%s\n", cmp.Diff(got, want))
+		t.Error(cmp.Diff(got, want))
 	}
 }
 
-func TestClientEmptyResponseShouldError(t *testing.T) {
+func TestISSClient_ErrorsOnInputWithInvalidEmptyData(t *testing.T) {
 	t.Parallel()
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, `{}`)
 	}))
 	defer ts.Close()
 
-	issClient := iss.New()
-	issClient.BaseURL = ts.URL
-
-	_, err := issClient.Get()
-	if err == nil {
+	issClient, err := iss.New(iss.WithBaseURL(ts.URL))
+	if err != nil {
 		t.Fatal(err)
+	}
+	_, err = issClient.GetPosition()
+	if err == nil {
+		t.Fatal("should error on invalid data")
 	}
 }
 
-func TestClientMissingCoordinates_Latitude(t *testing.T) {
+func TestISSClient_ErrorsOnInputWithInvalidLatitudeCoordinates(t *testing.T) {
 	t.Parallel()
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, `{"timestamp": 1638559834, "message": "success", "iss_position": {"latitude": "", "longitude": "11.3786"}}`)
 	}))
 	defer ts.Close()
 
-	issClient := iss.New()
-	issClient.BaseURL = ts.URL
-
-	_, err := issClient.Get()
+	issClient, err := iss.New(iss.WithBaseURL(ts.URL))
+	if err != nil {
+		t.Fatal()
+	}
+	_, err = issClient.GetPosition()
 	if err == nil {
-		t.Fatal(err)
+		t.Fatal("should error on input with invalid data")
 	}
 }
 
-func TestClientMissingCoordinates_Longitude(t *testing.T) {
+func TestISSClient_ErrorsOnInvalidLongitudeCoordinates(t *testing.T) {
 	t.Parallel()
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, `{"timestamp": 1638559834, "message": "success", "iss_position": {"latitude": "29.9314", "longitude": ""}}`)
 	}))
 	defer ts.Close()
 
-	issClient := iss.New()
-	issClient.BaseURL = ts.URL
-
-	_, err := issClient.Get()
-	if err == nil {
+	issClient, err := iss.New(iss.WithBaseURL(ts.URL))
+	if err != nil {
 		t.Fatal(err)
+	}
+	_, err = issClient.GetPosition()
+	if err == nil {
+		t.Fatal("should error on input with invalid data")
 	}
 }
