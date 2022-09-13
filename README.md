@@ -28,8 +28,8 @@ If you  want to use your customized ```http.Client```
 
 ```go
 httpClient := http.Client{}
-iss, err := iss.New(iss.WithHTTPClient(&httpClient))
-iss.GetPosition()
+issClient, err := iss.New(iss.WithHTTPClient(&httpClient))
+issClient.GetPosition()
 
 ```
 
