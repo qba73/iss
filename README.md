@@ -1,5 +1,5 @@
 # ISS
-
+[![GoDoc](https://godoc.org/github.com/qba73/iss?status.png)](http://godoc.org/github.com/qba73/iss)
 ![Go](https://github.com/qba73/iss/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/qba73/iss)](https://goreportcard.com/report/github.com/qba73/iss)
 ![GitHub](https://img.shields.io/github/license/qba73/iss)
