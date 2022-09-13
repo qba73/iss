@@ -48,3 +48,7 @@ lat, long, _ := iss.GetPositionAsStrings()
 fmt.Println(lat, long)
 // Output: -11.6732 17.4279
 ```
+
+## A complete example program
+
+You can see an example program which retrieves the ISS coordinates in the [examples/demo](examples/demo/main.go) folder.
