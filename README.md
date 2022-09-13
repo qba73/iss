@@ -4,6 +4,25 @@
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/qba73/iss)
 
 # ISS
-International Space Station Go client
+ISS is a Go library for the the [International Space Station](https://en.wikipedia.org/wiki/International_Space_Station) API. It allows to get station's lat and long coordinates.
 
-The [International Space Station](https://en.wikipedia.org/wiki/International_Space_Station) is a modular space station in low Earth orbit. It is a multinational collaborative project involving five participating space agencies: NASA, Roscosmos, JAXA, ESA, and CSA. The ownership and use of the space station is established by intergovernmental treaties and agreements.
+## Using the Go library
+
+Import the library using
+```go
+import github.com/qba73/iss
+```
+
+## Creating a client
+Create a new client object by calling ```iss.New()```
+```go
+client := iss.New()
+```
+
+## Retrieving ISS coordinates
+```go
+client := iss.New()
+client.GetPosition()
+```
+
+
