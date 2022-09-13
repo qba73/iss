@@ -1,3 +1,5 @@
+![Go](https://github.com/qba73/iss/workflows/Go/badge.svg)
+
 # ISS
 International Space Station Go client
 
