@@ -1,10 +1,10 @@
-# ISS
 [![GoDoc](https://godoc.org/github.com/qba73/iss?status.png)](http://godoc.org/github.com/qba73/iss)
 ![Go](https://github.com/qba73/iss/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/qba73/iss)](https://goreportcard.com/report/github.com/qba73/iss)
 ![GitHub](https://img.shields.io/github/license/qba73/iss)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/qba73/iss)
 
+# ISS
 
 ISS is a Go library for the the [International Space Station](https://en.wikipedia.org/wiki/International_Space_Station) API. It allows to get station's current lat and long coordinates.
 
