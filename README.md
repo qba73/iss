@@ -22,14 +22,24 @@ Create a new client object by calling ```iss.New()```
 
 ```go
 client, err := iss.New()
+if err != nil {
+  // handle error
+}
 ```
 
-If you  want to use your customized ```http.Client```
+If you  want to use your ```http.Client```
 
 ```go
 httpClient := http.Client{}
 issClient, err := iss.New(iss.WithHTTPClient(&httpClient))
-issClient.GetPosition()
+if err != nil {
+  // handle error
+}
+
+lat, long, err := issClient.GetPosition()
+if err != nil {
+  // handle error
+}
 
 ```
 
@@ -37,9 +47,18 @@ issClient.GetPosition()
 
 ```go
 client, err := iss.New()
+if err != nil {
+  // handle error
+}
+
 position, err := client.GetPosition()
+if err != nil {
+  // handle error
+}
+
 fmt.Println(position)
 // Output: {10.5489 1.3942}
+
 ```
 
 ## Retrieving ISS coordinates using functions
@@ -48,14 +67,22 @@ The ```iss``` package provides a high level functions for retrieving ISS coordin
 
 ```go
 lat, long, err := iss.GetPosition()
+if err != nil {
+  // handle error
+}
 fmt.Println(lat, long)
 // Output: -8.0037 14.7139
+
 ```
 
 ```go
-lat, long, _ := iss.GetPositionAsStrings()
+lat, long, err := iss.GetPositionAsStrings()
+if err != nil {
+  // handle error
+}
 fmt.Println(lat, long)
 // Output: -11.6732 17.4279
+
 ```
 
 ## A complete example program
